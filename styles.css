@@ -6,8 +6,9 @@ body.ui.container {
 }
 
 aside {
-  max-width: 25%;
+  max-width: 50%;
   margin-right: 1rem;
+  clear: block;
 }
 
 main {

@@ -1,1 +1,1 @@
-window.AGORA_APP_ID = "PUT YOUR APP ID HERE"
+window.AGORA_APP_ID = "cc21d8682d134a83a07846acf43cdec5"

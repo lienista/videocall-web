@@ -35,18 +35,20 @@
     import { Effect, Webcam, Player, Dom, MediaStreamCapture } from "./BanubaSDK.js"
 
     const effects = [
+      "1",
+      "2",
       "Afro",
       "PoliceMan",
       "Glasses",
       "MonsterFactory",
       "Spider",
-    ]
+    ];
 
-    ;(async () => {    
+  (async () => {    
       //#region web ar setup
       const player = await Player.create({ clientToken: window.BANUBA_CLIENT_TOKEN })
 
-      player.use(new Webcam({ width: 640, height: 480 }))
+      player.use(new Webcam({ width: 1280, height: 720 }))
 
       Dom.render(player, "#webar")
 
