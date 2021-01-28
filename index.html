@@ -37,6 +37,17 @@
     const effects = [
       "1",
       "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
       "Afro",
       "PoliceMan",
       "Glasses",
@@ -59,7 +70,7 @@
             ${effectName}
           </button>`
         )
-        .prependTo("#effects")
+        .appendTo("#effects")
 
         const effect = await Effect.preload(`effects/${effectName}.zip`)
 

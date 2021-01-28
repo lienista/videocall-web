@@ -1,22 +1,21 @@
 body.ui.container {
-  display: flex;
+  display: block;
   max-width: 1024px;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
 aside {
-  max-width: 50%;
+  max-width: 100%;
   margin-right: 1rem;
   clear: block;
 }
 
 main {
-  position: relative;
-  overflow: hidden;
   flex-grow: 1;
-  display: grid;
+  display: flex;
   background-color: #cfcfcf;
+  height: 360px;
 }
 
 main:empty::after {
@@ -36,7 +35,9 @@ h2 {
   font-size: 1.25rem;
 }
 
-.ui.button { margin: 0.25em; }
+.ui.button { 
+  margin: 0; 
+}
 
 #effect-controls {
   padding: 0.5rem;
@@ -47,8 +48,8 @@ h2 {
 
 #effects {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
 }
 
 #webar {
