@@ -18,7 +18,7 @@ main {
   height: 360px;
 }
 
-main:empty::after {
+/* main:empty::after {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -26,8 +26,7 @@ main:empty::after {
   font-size: 2rem;
   text-align: center;
   color: rgba(255, 255, 255, 0.8);
-  content: "Waiting for participants..."
-}
+} */
 
 h2 {
   display: inline;
