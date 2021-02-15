@@ -90,7 +90,11 @@
     const files = [];
     $('#text').html(text.en.description)
     for(let i=1;i<=46; i++) {
-      files.push(i+"");
+      if(i===30) {
+        files.push('25');
+      } else {
+        files.push(i +'');
+      }
     }
     const effects = [
       ...files,
@@ -154,8 +158,6 @@
         const usersCount = client.remoteUsers.length
         const columnsCount = Math.ceil(Math.sqrt(usersCount))
         // $("main").css("grid-template-columns", `repeat(${columnsCount}, 1fr)`)
-        const effect = await Effect.preload(`effects/1.zip`)
-        player.applyEffect(effect)
       }
       client.on("user-joined", adjustParticipantsView)
       client.on("user-left", adjustParticipantsView)
