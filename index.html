@@ -15,6 +15,7 @@
 <body class="ui container">
   <aside>     
     <div id="webar">
+      <img src="cover.jpg" class="cover" id="cover">
       <button class="ui icon button" id="sound">
         <i class="volume up icon"></i>
       </button>
@@ -24,7 +25,9 @@
         <i class="undo icon"></i>
       </button>
     </div> -->
-    <div id="effects"></div>
+    
+    <div id="effects">
+    </div>
     <div id="text" class="text"></div>
   </aside>
   <!-- <main></main> -->
@@ -85,6 +88,7 @@
       }
     }
     const files = [];
+    $('#text').html(text.en.description)
     for(let i=1;i<=46; i++) {
       files.push(i+"");
     }
@@ -118,6 +122,7 @@
         const effect = await Effect.preload(`effects/${effectName}.zip`)
         
         btn.on("click", (e) => {
+          $('#cover').hide();
           const currentPage = e.target.id;
           console.log('currentPage: ', currentPage, $('#'+currentPage));
           $('button').removeClass('active');
@@ -145,10 +150,12 @@
       })
 
       //#region participants view
-      const adjustParticipantsView = () => {
+      const adjustParticipantsView = async () => {
         const usersCount = client.remoteUsers.length
         const columnsCount = Math.ceil(Math.sqrt(usersCount))
         // $("main").css("grid-template-columns", `repeat(${columnsCount}, 1fr)`)
+        const effect = await Effect.preload(`effects/1.zip`)
+        player.applyEffect(effect)
       }
       client.on("user-joined", adjustParticipantsView)
       client.on("user-left", adjustParticipantsView)
@@ -156,7 +163,6 @@
 
       await client.join(window.AGORA_APP_ID, "test", null)
       //endregion
-      $('#1').click();
 
       //#region Banuba Web AR SDK and Agora Web SDK integration
       const stream = new MediaStreamCapture(player)
@@ -167,11 +173,17 @@
       await client.publish([ video, audio ])
 
       //#region sound
-      let volume = 100
-      const toggleSound = () => {
+      let volume = 100;
+      let count = 0;
+      const toggleSound = (e) => {
+        console.log('togglesound', e.target);
         volume = volume ? 0 : 100
-        audio.setVolume(volume)
-        $("#sound > i").toggleClass("up mute")
+        audio.setVolume(volume);
+        const soundElem = $("#sound > i");
+        count++;
+        
+        $("#sound > i").toggleClass("mute", count%2===1);
+        $("#sound > i").toggleClass("up", count%2===0)
       }
 
       $("#sound").on("click", toggleSound)
