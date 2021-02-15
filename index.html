@@ -19,40 +19,31 @@
         <i class="volume up icon"></i>
       </button>
     </div>
-    <div id="effect-controls">
-      <h2>Navigate to page:</h2>
+    <!-- <div id="effect-controls">
       <button class="circular ui icon button" id="reset" title="Reset">
         <i class="undo icon"></i>
       </button>
-    </div>
+    </div> -->
     <div id="effects"></div>
   </aside>
-  <main></main>
+  <!-- <main></main> -->
 
   <script src="AgoraAppId.js"></script>
   <script src="BanubaClientToken.js"></script>
   <script type="module">
     import { Effect, Webcam, Player, Dom, MediaStreamCapture } from "./BanubaSDK.js"
 
+    const files = [];
+    for(let i=1;i<=46; i++) {
+      files.push(i+"");
+    }
     const effects = [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13",
-      "Afro",
-      "PoliceMan",
-      "Glasses",
-      "MonsterFactory",
-      "Spider",
+      ...files,
+      // "Afro",
+      // "PoliceMan",
+      // "Glasses",
+      // "MonsterFactory",
+      // "Spider",
     ];
 
   (async () => {    
@@ -62,22 +53,29 @@
       player.use(new Webcam({ width: 1280, height: 720 }))
 
       Dom.render(player, "#webar")
+      
 
       //#region effects
       $.each(effects, async (idx, effectName) => {
         const btn = $(
-          `<button class="ui tertiary button elastic loading">
+          `<button class="ui tertiary button elastic loading" id="${idx}">
             ${effectName}
           </button>`
         )
         .appendTo("#effects")
 
         const effect = await Effect.preload(`effects/${effectName}.zip`)
-
-        btn.on("click", () => player.applyEffect(effect))
+        
+        btn.on("click", (e) => {
+          const currentPage = e.target.id;
+          console.log('currentPage: ', currentPage, $('#'+currentPage));
+          $('button').removeClass('active');
+          $('#'+currentPage).addClass('active');
+          player.applyEffect(effect);
+        })
         btn.removeClass("loading")
       })
-      $("#reset").on("click", () => player.clearEffect())
+      //$("#reset").on("click", () => player.clearEffect())
       //#endregion
       //#endregion
 
@@ -86,15 +84,20 @@
 
       client.on("user-published", async (user, mediaType) => {
         await client.subscribe(user, mediaType);
-        if (mediaType === "video") user.videoTrack.play($("main")[0]);
-        if (mediaType === "audio") user.audioTrack.play();
+        if (mediaType === "video") {
+          user.videoTrack.play($("main")[0]);
+        }
+        if (mediaType === "audio") {
+          user.audioTrack.play();
+        }
+        
       })
 
       //#region participants view
       const adjustParticipantsView = () => {
         const usersCount = client.remoteUsers.length
         const columnsCount = Math.ceil(Math.sqrt(usersCount))
-        $("main").css("grid-template-columns", `repeat(${columnsCount}, 1fr)`)
+        // $("main").css("grid-template-columns", `repeat(${columnsCount}, 1fr)`)
       }
       client.on("user-joined", adjustParticipantsView)
       client.on("user-left", adjustParticipantsView)
@@ -102,6 +105,7 @@
 
       await client.join(window.AGORA_APP_ID, "test", null)
       //endregion
+      player.applyEffect(effects[0]);
 
       //#region Banuba Web AR SDK and Agora Web SDK integration
       const stream = new MediaStreamCapture(player)
