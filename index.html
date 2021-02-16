@@ -31,6 +31,23 @@
     <div id="text" class="text"></div>
   </aside>
   <!-- <main></main> -->
+  <div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+      Enable your camera
+    </div>
+    <div class="image content">
+      <!-- <div class="image">
+        This is a live story to read over the web cam. 
+      </div> -->
+      <div class="description">
+        This is a live classroom, and this book is to be read over the webcam. Turn on your camera to have some fun in class.
+      </div>
+    </div>
+    <div class="actions">
+      <div class="ui button ok">OK</div>
+    </div>
+  </div>
 
   <script src="AgoraAppId.js"></script>
   <script src="BanubaClientToken.js"></script>
@@ -136,6 +153,11 @@
         })
         btn.removeClass("loading")
       })
+
+      $('.ui.modal').modal('show');
+      $('.ui.button.ok').on('click', () =>{
+        this.modal('hide');
+      })
       //$("#reset").on("click", () => player.clearEffect())
       //#endregion
       //#endregion
@@ -178,7 +200,8 @@
       let volume = 100;
       let count = 0;
       const toggleSound = (e) => {
-        console.log('togglesound', e.target);
+        console.log(e);
+
         volume = volume ? 0 : 100
         audio.setVolume(volume);
         const soundElem = $("#sound > i");
@@ -187,10 +210,11 @@
         $("#sound > i").toggleClass("mute", count%2===1);
         $("#sound > i").toggleClass("up", count%2===0)
       }
-
-      $("#sound").on("click", toggleSound)
+      $("#sound").on("click", toggleSound);
+      
       //#endregion
-    })()
+    })();
+    
   </script>
 </body>
 
