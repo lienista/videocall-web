@@ -41,7 +41,7 @@
         This is a live story to read over the web cam. 
       </div> -->
       <div class="description">
-        This is a live classroom, and this book is to be read over the webcam. Turn on your camera to have some fun in class.
+        This is a live classroom, and this book is meant to be read over the webcam. Turn on your camera to have some fun in class.
       </div>
     </div>
     <div class="actions">
@@ -105,6 +105,7 @@
       }
     }
     const files = [];
+    
     $('#text').html(text.en.description)
     for(let i=1;i<=46; i++) {
       if(i===30) {
@@ -148,15 +149,26 @@
           console.log('currentPage: ', currentPage, $('#'+currentPage));
           $('button').removeClass('active');
           $('#'+currentPage).addClass('active');
-          $('#text').html(text.en[parseInt(currentPage) + 1])
+          const words = text.en[parseInt(currentPage) + 1].split(' ').join('</span> <span>')
+          $('#text').html(`<span>${words}</span>`);
           player.applyEffect(effect);
         })
-        btn.removeClass("loading")
+        btn.removeClass("loading");
+        
+        
       })
 
       $('.ui.modal').modal('show');
       $('.ui.button.ok').on('click', () =>{
         this.modal('hide');
+      })
+
+      $('#text').on('click', 'span', function() {
+          console.log('clicked hello', this);
+          const current = $(this);
+          const span = $('.text span');
+          span.removeClass('active');
+          current.addClass('active');
       })
       //$("#reset").on("click", () => player.clearEffect())
       //#endregion
@@ -199,8 +211,8 @@
       //#region sound
       let volume = 100;
       let count = 0;
-      const toggleSound = (e) => {
-        console.log(e);
+      function toggleSound() {
+        console.log('toggleSound');
 
         volume = volume ? 0 : 100
         audio.setVolume(volume);
