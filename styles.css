@@ -42,7 +42,7 @@ button {
   border-radius: 15px;
 }
 
-.ui.button.active,
+.ui.tertiary.button.active,
 .ui.tertiary.button:hover {
   background-color: royalblue;
   color: #fff;
